@@ -22,7 +22,18 @@ function Stage({ user_id }: Props) {
   });
   return (
     <>
-      <h3>Staged</h3>
+      <div className="container">
+        <div className="row justify-content-between align-items-center staged-header">
+          <div className="col-sm">
+            <h3>Staged</h3>
+          </div>
+          <div className="col-sm text-end">
+            <button type="button" className="btn staged-add-button">
+              +
+            </button>
+          </div>
+        </div>
+      </div>
       <div className="accordion custom-accordion--yellow" id="accordionFlush">
         {entries.map((entry) => (
           <>

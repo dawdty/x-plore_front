@@ -1,21 +1,18 @@
 body {
   background-color: #202020 !important; /* Dark gray background */
-  background-image: linear-gradient(to right, #ffff00 1px, transparent 1px),
-    linear-gradient(to bottom, #ffff00 1px, transparent 1px);
-  background-size: 60px 104px;
-  position: relative;
-}
+  overflow: hidden; /* Ensure pseudo-element doesn't overflow */
 
-// body::before {
-//   content: "";
-//   position: absolute;
-//   top: 0;
-//   left: 0;
-//   right: 0;
-//   bottom: 0;
-//   background-image: linear-gradient(to right, #ffff00 1px, transparent 1px),
-//     linear-gradient(to bottom, #ffff00 1px, transparent 1px);
-//   background-size: 60px 104px;
-//   background-position: 30px 52px;
-//   z-index: -1;
-// }
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: linear-gradient(to right, #ffff00 1px, transparent 1px),
+      linear-gradient(to bottom, #ffff00 1px, transparent 1px);
+    background-size: 60px 104px;
+    z-index: -1;
+    filter: drop-shadow(0 0 10px #ffff00); /* Apply glow effect */
+  }
+}

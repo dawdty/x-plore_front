@@ -7,3 +7,12 @@
   padding: 20px;
   border-radius: 20px;
 }
+
+.staged-header {
+  padding-bottom: 10px;
+  .staged-add-button {
+    background-color: $yellow;
+    color: $black
+    ;
+  }
+}
