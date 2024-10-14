@@ -14,17 +14,44 @@ function Stage({ user_id }: Props) {
     const fetchStaged = async () => {
       const staged = await api.getStagedItems(user_id);
       setEntries(staged);
-      console.log("staged foo", entries);
     };
     fetchStaged();
   }, []);
+  useEffect(() => {
+    console.log("entries", entries);
+  });
   return (
     <>
-      <ul className="list-group">
+      <h3>Staged</h3>
+      <div className="accordion custom-accordion--yellow" id="accordionFlush">
         {entries.map((entry) => (
-          <StagedEntry key={entry.id} {...entry}></StagedEntry>
+          <>
+            <div className="accordion-item">
+              <h2 className="accordion-header bs-info-text-emphasis">
+                <button
+                  className="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target={`#flush-collapse${entry.id}`}
+                  aria-expanded="false"
+                  aria-controls={`flush-collapse${entry.id}`}
+                >
+                  {entry.paper__title}
+                </button>
+              </h2>
+              <div
+                id={`flush-collapse${entry.id}`}
+                className="accordion-collapse collapse"
+                data-bs-parent="#accordionFlush"
+              >
+                <div className="accordion-body">
+                  <StagedEntry key={entry.id} {...entry} />
+                </div>
+              </div>
+            </div>
+          </>
         ))}
-      </ul>
+      </div>
     </>
   );
 }
