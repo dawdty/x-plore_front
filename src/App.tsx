@@ -1,35 +1,40 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState, useEffect } from "react";
+import "./App.css";
+import Stage from "./components/Stage";
+import Queue from "./components/Queue";
+import Header from "./components/Header";
 
 function App() {
-  const [count, setCount] = useState(0)
-
+  const [theme, setTheme] = useState("dark");
+  function toggleTheme() {
+    setTheme(theme == "dark" ? "light" : "dark");
+  }
+  useEffect(() => {
+    document.documentElement.setAttribute("data-bs-theme", theme);
+  });
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <Header theme={theme} handleClick={toggleTheme} />
+      <div className="container bg-transparent">
+        <Content />
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
-  )
+  );
 }
 
-export default App
+function Content() {
+  return (
+    <div className="container bg-transparent">
+      <div className="row bg-transparent">
+        <div className="col-sm bg-dark staged">
+          <Stage user_id={1} />
+        </div>
+        <div className="col-sm">
+          <Queue />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default App;
