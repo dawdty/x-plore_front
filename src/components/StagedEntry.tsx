@@ -1,12 +1,11 @@
 // each item contains the paper specific items
-import { StagedEntryItem } from "../api/response-types";
+import { Paper } from "../api/response-types";
 
 function StagedEntry({
-  id,
-  paper__title,
-  paper__abstract,
-  paper__url,
-}: StagedEntryItem) {
+  doi: id,
+  title: paper__title,
+  abstract: paper__abstract,
+}: Paper) {
   const abstract =
     paper__abstract == null ? "No description available." : paper__abstract;
   const truncatedAbstract =

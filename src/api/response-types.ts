@@ -1,10 +1,14 @@
 // more items
 
 
+export interface Paper {
+    doi: string,
+    title: string,
+    abstract: string | null,
+}
 
-export interface StagedEntryItem {
-    id: number,
-    paper__title: string,
-    paper__abstract: string | null,
-    paper__url: string | null,
+export interface TrackedPaper {
+    owner: string,
+    paper: Paper,
+    rating: number,
 }

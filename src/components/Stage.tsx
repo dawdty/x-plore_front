@@ -1,7 +1,6 @@
-// stage includes button to add and a dropdown view of all items in staging area
 import { useState, useEffect } from "react";
 import { api } from "../api";
-import { StagedEntryItem } from "../api/response-types";
+import { TrackedPaper } from "../api/response-types";
 import StagedEntry from "./StagedEntry";
 
 interface Props {
@@ -9,17 +8,21 @@ interface Props {
 }
 
 function Stage({ user_id }: Props) {
-  const [entries, setEntries] = useState<StagedEntryItem[]>([]);
+  const [entries, setEntries] = useState<TrackedPaper[]>([]);
+
   useEffect(() => {
     const fetchStaged = async () => {
       const staged = await api.getStagedItems(user_id);
+      console.log("API response:", staged); // Log the API response
       setEntries(staged);
     };
     fetchStaged();
-  }, []);
+  }, [user_id]);
+
   useEffect(() => {
     console.log("entries", entries);
-  });
+  }, [entries]);
+
   return (
     <>
       <div className="container">
@@ -36,31 +39,29 @@ function Stage({ user_id }: Props) {
       </div>
       <div className="accordion custom-accordion--yellow" id="accordionFlush">
         {entries.map((entry) => (
-          <>
-            <div className="accordion-item">
-              <h2 className="accordion-header bs-info-text-emphasis">
-                <button
-                  className="accordion-button collapsed"
-                  type="button"
-                  data-bs-toggle="collapse"
-                  data-bs-target={`#flush-collapse${entry.id}`}
-                  aria-expanded="false"
-                  aria-controls={`flush-collapse${entry.id}`}
-                >
-                  {entry.paper__title}
-                </button>
-              </h2>
-              <div
-                id={`flush-collapse${entry.id}`}
-                className="accordion-collapse collapse"
-                data-bs-parent="#accordionFlush"
+          <div className="accordion-item" key={entry.paper.doi}>
+            <h2 className="accordion-header bs-info-text-emphasis">
+              <button
+                className="accordion-button collapsed"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target={`#flush-collapse${entry.paper.doi}`}
+                aria-expanded="false"
+                aria-controls={`flush-collapse${entry.paper.doi}`}
               >
-                <div className="accordion-body">
-                  <StagedEntry key={entry.id} {...entry} />
-                </div>
+                {entry.paper.title}
+              </button>
+            </h2>
+            <div
+              id={`flush-collapse${entry.paper.doi}`}
+              className="accordion-collapse collapse"
+              data-bs-parent="#accordionFlush"
+            >
+              <div className="accordion-body">
+                <StagedEntry key={entry.paper.doi} {...entry.paper} />
               </div>
             </div>
-          </>
+          </div>
         ))}
       </div>
     </>
