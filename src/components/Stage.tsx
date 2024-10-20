@@ -3,25 +3,17 @@ import { api } from "../api";
 import { TrackedPaper } from "../api/response-types";
 import StagedEntry from "./StagedEntry";
 
-interface Props {
-  user_id: number;
-}
-
-function Stage({ user_id }: Props) {
+function Stage() {
   const [entries, setEntries] = useState<TrackedPaper[]>([]);
 
   useEffect(() => {
     const fetchStaged = async () => {
-      const staged = await api.getStagedItems(user_id);
+      const staged = await api.getStagedItems();
       console.log("API response:", staged); // Log the API response
       setEntries(staged);
     };
     fetchStaged();
-  }, [user_id]);
-
-  useEffect(() => {
-    console.log("entries", entries);
-  }, [entries]);
+  }, []); // Add an empty dependency array to run the effect only once
 
   return (
     <>
